@@ -14,11 +14,12 @@ import javax.persistence.Table;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long userId;
     private String username;
     private String email;
-    private String password;
-    private UserRole role;
+    private String userPasswd;
+    private UserRole Userrole;
+    
 
 
     public User() {
@@ -26,31 +27,31 @@ public class User {
 
 
     public User(Long id, String username, String email, String password, UserRole role) {
-        this.id = id;
+        this.userId = id;
         this.username = username;
         this.email = email;
-        this.password = password;
-        this.role = role;
+        this.userPasswd = password;
+        this.Userrole = role;
     }
 
-    public Long getId() {
-        return id;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setUserId(Long id) {
+        this.userId = id;
     }
 
     public String getUsername() {
         return username;
     }
 
-    public UserRole getRole() {
-        return role;
+    public UserRole getUserrole() {
+        return Userrole;
     }
 
-    public void setRole(UserRole role) {
-        this.role = role;
+    public void setUserrole(UserRole role) {
+        this.Userrole = role;
     }
 
     public void setUsername(String username) {
@@ -65,12 +66,12 @@ public class User {
         this.email = email;
     }
 
-    public String getPassword() {
-        return password;
+    public String getUserPasswd() {
+        return userPasswd;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setUserPasswd(String password) {
+        this.userPasswd = password;
     }
 
     public boolean equals(Object object) {
@@ -78,11 +79,11 @@ public class User {
         if (!(object instanceof User)) return false;
         if (!super.equals(object)) return false;
         User user = (User) object;
-        return java.util.Objects.equals(getId(), user.getId()) && java.util.Objects.equals(getUsername(), user.getUsername()) && java.util.Objects.equals(getEmail(), user.getEmail()) && java.util.Objects.equals(getPassword(), user.getPassword());
+        return java.util.Objects.equals(getUserId(), user.getUserId()) && java.util.Objects.equals(getUsername(), user.getUsername()) && java.util.Objects.equals(getEmail(), user.getEmail()) && java.util.Objects.equals(getUserPasswd(), user.getUserPasswd());
     }
 
     public int hashCode() {
-        return Objects.hash(super.hashCode(), getId(), getUsername(), getEmail(), getPassword());
+        return Objects.hash(super.hashCode(), getUserId(), getUsername(), getEmail(), getUserPasswd());
     }
 
 

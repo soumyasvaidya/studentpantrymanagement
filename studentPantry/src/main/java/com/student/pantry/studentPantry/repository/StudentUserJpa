@@ -5,12 +5,15 @@ import org.springframework.data.repository.CrudRepository;
 
 import com.student.pantry.studentPantry.entity.StudentUser;
 import org.springframework.stereotype.Repository;
+import java.util.List;
+
 
 
 @Repository
 public interface StudentUserJpa extends CrudRepository<StudentUser, Long> {
 
-    AdminUser findByEmail(String lastName);
+    StudentUser findByEmail(String lastName);
 
-    AdminUser findById(long id);
+    StudentUser findById(long id);
+    StudentUser findByEmailAndUserPasswd(String email, String password);
 }

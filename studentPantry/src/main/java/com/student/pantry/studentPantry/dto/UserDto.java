@@ -6,8 +6,8 @@ public class UserDto{
     private Long id;
     private String username;
     private String email;
-    private String password;
-    private UserRole role;
+    private String userPasswd;
+    private UserRole userrole;
 
     public UserDto() {
     }
@@ -16,8 +16,8 @@ public class UserDto{
         this.id = id;
         this.username = username;
         this.email = email;
-        this.password = password;
-        this.role = role;
+        this.userPasswd = password;
+        this.userrole = role;
     }
 
     public Long getId() {
@@ -32,12 +32,12 @@ public class UserDto{
         return username;
     }
 
-    public UserRole getRole() {
-        return role;
+    public UserRole getUserrole() {
+        return userrole;
     }
 
-    public void setRole(UserRole role) {
-        this.role = role;
+    public void setUserrole(UserRole role) {
+        this.userrole = role;
     }
 
     public void setUsername(String username) {
@@ -52,12 +52,12 @@ public class UserDto{
         this.email = email;
     }
 
-    public String getPassword() {
-        return password;
+    public String getUserPasswd() {
+        return userPasswd;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setUserPasswd(String password) {
+        this.userPasswd = password;
     }
 
     public boolean equals(Object object) {
@@ -65,11 +65,11 @@ public class UserDto{
         if (!(object instanceof UserDto)) return false;
         if (!super.equals(object)) return false;
         UserDto userDTO = (UserDto) object;
-        return java.util.Objects.equals(getId(), userDTO.getId()) && java.util.Objects.equals(getUsername(), userDTO.getUsername()) && java.util.Objects.equals(getEmail(), userDTO.getEmail()) && java.util.Objects.equals(getPassword(), userDTO.getPassword());
+        return java.util.Objects.equals(getId(), userDTO.getId()) && java.util.Objects.equals(getUsername(), userDTO.getUsername()) && java.util.Objects.equals(getEmail(), userDTO.getEmail()) && java.util.Objects.equals(getUserPasswd(), userDTO.getUserPasswd());
     }
 
     public int hashCode() {
-        return Objects.hash(super.hashCode(), getId(), getUsername(), getEmail(), getPassword());
+        return Objects.hash(super.hashCode(), getId(), getUsername(), getEmail(), getUserPasswd());
     }
 
     @java.lang.Override
@@ -78,7 +78,7 @@ public class UserDto{
                 "id=" + id +
                 ", username='" + username + '\'' +
                 ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
+                ", password='" + userPasswd + '\'' +
                 '}';
     }
 }

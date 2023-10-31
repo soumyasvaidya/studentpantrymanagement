@@ -4,10 +4,8 @@ package com.student.pantry.studentPantry.entity;
 import java.util.Objects;
 
 import javax.persistence.Entity;
-import javax.persistence.Table;
 
 @Entity
-@Table
 public class StudentUser extends User {
     private Long studentId;
 

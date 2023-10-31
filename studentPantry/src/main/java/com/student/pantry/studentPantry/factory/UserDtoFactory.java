@@ -1,10 +1,13 @@
 package com.student.pantry.studentPantry.factory;
 
+import org.springframework.stereotype.Component;
+
 import com.student.pantry.studentPantry.dto.AdminUserDto;
 import com.student.pantry.studentPantry.dto.StudentUserDto;
 import com.student.pantry.studentPantry.dto.UserDto;
 import com.student.pantry.studentPantry.dto.UserRole;
 
+@Component
 public class UserDtoFactory {
     public static UserDto createUserDTO(UserRole role, String username, String email, String password, Long roleId) {
         if (role == UserRole.STUDENT) {
@@ -21,7 +24,7 @@ public class UserDtoFactory {
         userDTO.setId(id);
         userDTO.setUsername(username);
         userDTO.setEmail(email);
-        userDTO.setPassword(password);
+        userDTO.setUserPasswd(password);
         return userDTO;
     }
 
@@ -30,7 +33,7 @@ public class UserDtoFactory {
         studentDTO.setId(studentId);
         studentDTO.setUsername(username);
         studentDTO.setEmail(email);
-        studentDTO.setPassword(password);
+        studentDTO.setUserPasswd(password);
         studentDTO.setStudentId(studentId);
         return studentDTO;
     }
@@ -40,7 +43,7 @@ public class UserDtoFactory {
         adminDTO.setId(adminId);
         adminDTO.setUsername(username);
         adminDTO.setEmail(email);
-        adminDTO.setPassword(password);
+        adminDTO.setUserPasswd(password);
         adminDTO.setAdminId(adminId);
         return adminDTO;
     }

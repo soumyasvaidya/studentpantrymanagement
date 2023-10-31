@@ -12,4 +12,6 @@ public interface AdminUserJpa extends CrudRepository<AdminUser, Long> {
     AdminUser findByEmail(String lastName);
 
     AdminUser findById(long id);
+
+    AdminUser findByEmailAndUserPasswd(String email, String password);
 }
