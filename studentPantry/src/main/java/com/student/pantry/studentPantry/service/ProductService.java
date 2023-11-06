@@ -8,6 +8,7 @@ import com.student.pantry.studentPantry.entity.Products;
 import com.student.pantry.studentPantry.repository.ProductJpa;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProductService {
@@ -30,5 +31,25 @@ public class ProductService {
             .build();
 
         productRepository.save(product);
+    }
+
+    public void updateProduct(Long productId, String productName, int productQuantity, String productExpiryDate)
+    {
+        Optional<Products> productOptional = productRepository.findById(productId);
+
+        if (productOptional.isPresent()){
+            Products exisitingProducts = productOptional.get();
+            exisitingProducts.setProductName(productName);
+            exisitingProducts.setProductQuantity(productQuantity);
+            exisitingProducts.setProductExpiryDate(productExpiryDate);
+
+            productRepository.save(exisitingProducts);
+        }
+        
+    }
+
+    public void removeProduct(Long productId) 
+    {
+        productRepository.deleteById(productId);
     }
 }
