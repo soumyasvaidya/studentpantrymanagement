@@ -32,12 +32,12 @@ pipelines:
           - npm test 
           services: 
           - postgres 
-
+          
 definitions: 
   services: 
     postgres: 
       image: postgres
       variables: 
-        POSTGRES_DB: 'pipelines' 
+        POSTGRES_DB: 'studentPantry' 
         POSTGRES_USER: 'postgres'
         POSTGRES_PASSWORD: 'Arati501@DK'
