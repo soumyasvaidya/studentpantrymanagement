@@ -12,16 +12,20 @@ import org.springframework.stereotype.Service;
 import com.student.pantry.studentPantry.dto.OrderHistoryDto;
 import com.student.pantry.studentPantry.entity.OrderHistory;
 import com.student.pantry.studentPantry.repository.OrderHistoryRepository;
+import com.student.pantry.studentPantry.repository.ShoppingCartRepository;
 import com.student.pantry.studentPantry.response.OrderHistoryResponse;
 
 @Service
 public class OrderHistoryService {
 
     private final OrderHistoryRepository orderHistoryRepository;
+    private final ShoppingCartRepository shoppingCartRepository;
+
 
     @Autowired
-    public OrderHistoryService(OrderHistoryRepository orderHistoryRepository) {
+    public OrderHistoryService(OrderHistoryRepository orderHistoryRepository, ShoppingCartRepository shoppingCartRepository) {
         this.orderHistoryRepository = orderHistoryRepository;
+        this.shoppingCartRepository=shoppingCartRepository;
     }
 
     public OrderHistoryResponse createOrder(OrderHistoryDto orderHistoryDto) {
@@ -40,6 +44,7 @@ public class OrderHistoryService {
         OrderHistory orderHistoryEntity = convertDtoToEntity(orderHistoryDto);
         OrderHistory savedOrder = orderHistoryRepository.save(orderHistoryEntity);
         orderPlaced=convertEntityToDto(savedOrder);
+        shoppingCartRepository.deleteByUserID(savedOrder.getUserId());
                  response= new OrderHistoryResponse("Order placed successfully", orderPlaced);
 
         }
