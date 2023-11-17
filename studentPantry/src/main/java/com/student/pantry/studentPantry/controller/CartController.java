@@ -27,4 +27,16 @@ public class CartController {
         cartService.removeProductFromCart(userID, productID, quantity);
         return ResponseEntity.status(HttpStatus.OK).body("Product removed from the cart successfully...!!!");
     }
+
+    @PostMapping("/{userID}/remove/{productID}")
+    public ResponseEntity<String> removeProductFromCart(@PathVariable Long userID, @PathVariable Long productID, @RequestParam int quantity) {
+        cartService.removeProductFromCart(userID, productID, quantity);
+        return ResponseEntity.status(HttpStatus.OK).body("Product removed from the cart successfully...!!!");
+    }
+
+    @PostMapping("/{userID}/update/{productID}")
+    public ResponseEntity<String> updateProductQuantity(@PathVariable Long userID, @PathVariable Long productID, @RequestParam int newQuantity) {
+        cartService.updateProductQuantity(userID, productID, newQuantity);
+        return ResponseEntity.status(HttpStatus.OK).body("Product updated in the cart successfully...!!!");
+    }
 }
