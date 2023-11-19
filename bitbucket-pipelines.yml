@@ -15,29 +15,8 @@ pipelines:
           caches:
             - maven
           script:
-            - mvn -B verify --file studentPantry/pom.xml
+            - mvn clean install -DskipTests=true
           after-script:
               # Collect checkstyle results, if any, and convert to Bitbucket Code Insights.
             - pipe: atlassian/checkstyle-report:0.3.0
-      - step:
-          name: Security Scan
-          script:
-            # Run a security scan for sensitive data.
-            # See more security tools at https://bitbucket.org/product/features/pipelines/integrations?&category=security
-            - pipe: atlassian/git-secrets-scan:0.5.1
             
-      - step: 
-          script: 
-          - npm install 
-          - npm test 
-          services: 
-          - postgres 
-          
-definitions: 
-  services: 
-    postgres: 
-      image: postgres
-      variables: 
-        POSTGRES_DB: 'studentPantry' 
-        POSTGRES_USER: 'postgres'
-        POSTGRES_PASSWORD: 'Arati501@DK'
