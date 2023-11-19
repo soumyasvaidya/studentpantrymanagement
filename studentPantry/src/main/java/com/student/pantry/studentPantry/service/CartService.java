@@ -4,6 +4,7 @@ import com.student.pantry.studentPantry.entity.ShoppingCart;
 import com.student.pantry.studentPantry.repository.ShoppingCartRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import java.util.List;
 
 
 @Service
@@ -44,5 +45,18 @@ public class CartService {
                 shoppingCartRepository.delete(cartItem);
             }
         }
+    }
+
+    public void updateProductQuantity(Long userID, Long productID, int newQuantity) {
+        ShoppingCart cartItem = shoppingCartRepository.findByUserIDAndProductID(userID, productID);
+
+        if (cartItem != null) {
+            cartItem.setProductQuantity(newQuantity);
+            shoppingCartRepository.save(cartItem);
+        }
+    }
+
+    public List<ShoppingCart> viewCart(Long userID) {
+        return shoppingCartRepository.findByUserID(userID);
     }
 }
