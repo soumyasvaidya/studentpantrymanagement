@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.student.pantry.studentPantry.builder.ProductBuilder;
+import com.student.pantry.studentPantry.entity.PantryUser;
 import com.student.pantry.studentPantry.entity.Products;
 import com.student.pantry.studentPantry.repository.ProductJpa;
 
@@ -13,6 +14,13 @@ import java.util.Optional;
 @Service
 public class ProductService {
     private final ProductJpa productRepository;
+    List<String> allUserEmail = null;
+    
+    @Autowired
+    UserServiceImpl userServiceImpl;
+    
+    @Autowired
+    EmailService emailService;
 
     @Autowired
     public ProductService(ProductJpa productRepository) {
@@ -31,6 +39,15 @@ public class ProductService {
             .build();
 
         productRepository.save(product);
+        allUserEmail = userServiceImpl.getAllUserEmails();
+        System.out.println(allUserEmail);
+        if(allUserEmail!=null && !allUserEmail.isEmpty()) {
+        	for (String email : allUserEmail) {
+        		System.out.println(email);
+        		emailService.sendOrderUpdates(email);
+        	}
+       	 
+        }
     }
 
     public void updateProduct(Long productId, String productName, int productQuantity, String productExpiryDate)
@@ -44,6 +61,14 @@ public class ProductService {
             exisitingProducts.setProductExpiryDate(productExpiryDate);
 
             productRepository.save(exisitingProducts);
+            allUserEmail = userServiceImpl.getAllUserEmails();
+            System.out.println(allUserEmail);
+            if(allUserEmail!=null && !allUserEmail.isEmpty()) {
+            	for (String email : allUserEmail) {
+            		System.out.println(email);
+            		emailService.sendOrderUpdates(email);
+            	}
+            }
         }
         
     }

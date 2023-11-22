@@ -1,5 +1,7 @@
 package com.student.pantry.studentPantry.repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -14,4 +16,6 @@ public interface PantryUserRepository extends JpaRepository<PantryUser, Long> {
     PantryUser findById(long id);
 
     PantryUser findByEmailAndUserPasswd(String email, String password);
+    
+    List<PantryUser> findAll();
 }

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.student.pantry.studentPantry.dto.OrderHistoryDto;
 import com.student.pantry.studentPantry.entity.OrderHistory;
+import com.student.pantry.studentPantry.entity.User;
 import com.student.pantry.studentPantry.repository.OrderHistoryRepository;
 import com.student.pantry.studentPantry.repository.ShoppingCartRepository;
 import com.student.pantry.studentPantry.response.OrderHistoryResponse;
@@ -20,6 +21,12 @@ public class OrderHistoryService {
 
     private final OrderHistoryRepository orderHistoryRepository;
     private final ShoppingCartRepository shoppingCartRepository;
+    
+    @Autowired
+    private EmailService emailService;
+    
+    @Autowired
+    UserServiceImpl userServiceImpl;
 
 
     @Autowired
@@ -31,6 +38,7 @@ public class OrderHistoryService {
     public OrderHistoryResponse createOrder(OrderHistoryDto orderHistoryDto) {
         OrderHistoryDto orderPlaced=null;
         OrderHistoryResponse response=null;
+        String userEmail=null;
         // Validate order placement frequency
         if(!validateOrderPlacementFrequency(orderHistoryDto.getUserId(), orderHistoryDto.getOrderPlacedDate())){
          response= new OrderHistoryResponse("Cannot Place order!!User has already placed two orders for this month", orderPlaced);
@@ -46,7 +54,10 @@ public class OrderHistoryService {
         orderPlaced=convertEntityToDto(savedOrder);
         shoppingCartRepository.deleteByUserID(savedOrder.getUserId());
                  response= new OrderHistoryResponse("Order placed successfully", orderPlaced);
-
+                 userEmail = userServiceImpl.getUserDetailsByUserId(savedOrder.getUserId().longValue());
+                 if(userEmail!=null && savedOrder.getOrderId()!=null) {
+                	 emailService.sendOrderConfirmation(userEmail, savedOrder.getOrderId());
+                 }
         }
         else{
             response=new OrderHistoryResponse("Cannot place order!! Number of items exceeded 15", orderPlaced);

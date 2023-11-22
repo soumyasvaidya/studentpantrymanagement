@@ -1,5 +1,9 @@
 package com.student.pantry.studentPantry.service;
 
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -9,6 +13,7 @@ import com.student.pantry.studentPantry.dto.UserDto;
 import com.student.pantry.studentPantry.dto.UserRole;
 import com.student.pantry.studentPantry.entity.PantryUser;
 import com.student.pantry.studentPantry.entity.PantryUserBuilder;
+import com.student.pantry.studentPantry.entity.User;
 import com.student.pantry.studentPantry.factory.UserDtoFactory;
 import com.student.pantry.studentPantry.repository.AdminUserJpa;
 import com.student.pantry.studentPantry.repository.PantryUserRepository;
@@ -141,12 +146,26 @@ public class UserServiceImpl implements UserService{
             System.out.println("user is null");
             return -1;
         }
+    }
+    
+    public String getUserDetailsByUserId(long userId) {
+    	PantryUser pantryUser=pantryUserJpa.findById(userId);
+    	System.out.println("pantry user::"+ pantryUser.getEmail()+" :role:"+pantryUser.getUserrole());
         
-
-
-
+        return pantryUser.getEmail();
     }
 
-
+    public List<PantryUser> getAllUsers() {
+        return pantryUserJpa.findAll();
+    }
     
+    public List<String> getAllUserEmails() {
+    	System.out.println("Inside getAllUSerEmails");
+        List<PantryUser> users = getAllUsers();
+        System.out.println(users);
+        // Extract emails from users
+        return users.stream()
+                .map(PantryUser::getEmail)
+                .collect(Collectors.toList());
+    }
 }
