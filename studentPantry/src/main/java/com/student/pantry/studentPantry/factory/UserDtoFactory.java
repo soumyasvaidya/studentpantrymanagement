@@ -35,6 +35,7 @@ public class UserDtoFactory {
         studentDTO.setEmail(email);
         studentDTO.setUserPasswd(password);
         studentDTO.setStudentId(studentId);
+        studentDTO.setUserrole(UserRole.STUDENT);
         return studentDTO;
     }
 
@@ -45,6 +46,7 @@ public class UserDtoFactory {
         adminDTO.setEmail(email);
         adminDTO.setUserPasswd(password);
         adminDTO.setAdminId(adminId);
+        adminDTO.setUserrole(UserRole.ADMIN);
         return adminDTO;
     }
 }
