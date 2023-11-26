@@ -1,7 +1,6 @@
 package com.student.pantry.studentPantry.service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +12,6 @@ import com.student.pantry.studentPantry.dto.UserDto;
 import com.student.pantry.studentPantry.dto.UserRole;
 import com.student.pantry.studentPantry.entity.PantryUser;
 import com.student.pantry.studentPantry.entity.PantryUserBuilder;
-import com.student.pantry.studentPantry.entity.User;
 import com.student.pantry.studentPantry.factory.UserDtoFactory;
 import com.student.pantry.studentPantry.repository.AdminUserJpa;
 import com.student.pantry.studentPantry.repository.PantryUserRepository;
@@ -53,7 +51,7 @@ public class UserServiceImpl implements UserService{
            }
            else {
             System.out.println("duplicate registration");
-            return new UserResponse("duplicate registration", new UserDto());
+            return new UserResponse("duplicate registration", null);
            }
 
         }
@@ -61,7 +59,7 @@ public class UserServiceImpl implements UserService{
         UserDto userresp= UserDtoFactory.createUserDTO(UserRole.STUDENT,spPantryUser.getUsername(),spPantryUser.getEmail(), null,spPantryUser.getUserId());
         return new UserResponse("Registration Successfull", userresp);
          }
-    return new UserResponse("Registration Not possible", new UserDto());
+    return new UserResponse("Registration Not possible",null);
 }
 
     
@@ -150,9 +148,25 @@ public class UserServiceImpl implements UserService{
     
     public String getUserDetailsByUserId(long userId) {
     	PantryUser pantryUser=pantryUserJpa.findById(userId);
-    	System.out.println("pantry user::"+ pantryUser.getEmail()+" :role:"+pantryUser.getUserrole());
-        
+    	//System.out.println("pantry user::"+ pantryUser.getEmail()+" :role:"+pantryUser.getUserrole());
+        if(pantryUser==null){
+            return null;
+        }
         return pantryUser.getEmail();
+    }
+
+    public UserDto getUserByUserId(long userId){
+        PantryUser pantryUser=pantryUserJpa.findById(userId);
+        UserRole role;
+    	System.out.println("pantry user::"+ pantryUser.getEmail()+" :role:"+pantryUser.getUserrole());
+        if(pantryUser.getUserrole().equals(com.student.pantry.studentPantry.entity.UserRole.ADMIN)){
+                role=UserRole.ADMIN;
+        }
+        else{
+            role=UserRole.STUDENT;
+        }
+        return UserDtoFactory.createUserDTO(role,pantryUser.getUsername(), pantryUser.getEmail(), null, pantryUser.getUserId());
+        
     }
 
     public List<PantryUser> getAllUsers() {
@@ -168,4 +182,5 @@ public class UserServiceImpl implements UserService{
                 .map(PantryUser::getEmail)
                 .collect(Collectors.toList());
     }
+
 }
