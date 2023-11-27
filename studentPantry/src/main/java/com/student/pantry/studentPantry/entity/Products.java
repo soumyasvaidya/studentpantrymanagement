@@ -15,6 +15,7 @@ public class Products {
     public String productName;
     public int productQuantity;
     public String productExpiryDate;
+	public String productImageURL;
     
     public Products() {
     }
@@ -41,5 +42,13 @@ public class Products {
 
 	public void setProductExpiryDate(String productExpiryDate) {
 		this.productExpiryDate = productExpiryDate;
+	}
+	
+	public String getproductImageURL() {
+		return productImageURL;
+	}
+
+	public void setProductImageURL(String productImageURL) {
+		this.productImageURL = productImageURL;
 	}
 }
