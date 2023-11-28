@@ -74,9 +74,11 @@ public class UserServiceImpl implements UserService{
         }
         else{
         pantryUser=pantryUserJpa.findByEmailAndUserPasswd(userDto.getEmail(), userDto.getUserPasswd());
-        System.out.println("pantry user::"+ pantryUser.getEmail()+" :role:"+pantryUser.getUserrole());
+        System.out.println("pantry user::"+ pantryUser.getEmail()+" :role:"+pantryUser.getUserrole()+"name:: "+pantryUser.getUsername());
         if(pantryUser!=null && pantryUser.getEmail()!=null){
             message="LOGIN SUCESS";
+            userDto.setId(pantryUser.getUserId());
+            userDto.setUsername(pantryUser.getUsername());
             if(pantryUser.getUserrole().equals(com.student.pantry.studentPantry.entity.UserRole.ADMIN)){
                 adminCount=1;
                 System.out.println("admincount: "+adminCount);
@@ -124,28 +126,7 @@ public class UserServiceImpl implements UserService{
 
 
     
-    @Transactional
-    public long loginUser(UserDto userDto){
 
-        PantryUser pantryUser=pantryUserJpa.findByEmailAndUserPasswd(userDto.getEmail(), userDto.getUserPasswd());
-        if(pantryUser!=null &&pantryUser.getEmail()!=null){}
-        System.out.println("login user details :: email"+ userDto.getEmail()+" passwd"+ userDto.getUserPasswd()+" role:"+userDto.getUserrole());
-        PantryUser user=new PantryUser();
-        user.setEmail(userDto.getEmail());
-        user.setUserPasswd("dmin123");
-        user.setUserId(1234L);
-        user.setUserrole(com.student.pantry.studentPantry.entity.UserRole.ADMIN);
-        if(user!=null){
-        pantryUser=pantryUserJpa.save(user);
-        System.out.println(pantryUser.getUserId());
-        return pantryUser.getUserId();
-        }
-        else{
-            System.out.println("user is null");
-            return -1;
-        }
-    }
-    
     public String getUserDetailsByUserId(long userId) {
     	PantryUser pantryUser=pantryUserJpa.findById(userId);
     	//System.out.println("pantry user::"+ pantryUser.getEmail()+" :role:"+pantryUser.getUserrole());
