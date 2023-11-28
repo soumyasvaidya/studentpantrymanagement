@@ -42,4 +42,7 @@ public class Products {
 	public void setProductExpiryDate(String productExpiryDate) {
 		this.productExpiryDate = productExpiryDate;
 	}
+	public void setProductId(long productId){
+		this.productId=productId;
+	}
 }

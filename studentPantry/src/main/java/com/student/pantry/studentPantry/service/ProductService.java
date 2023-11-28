@@ -1,15 +1,14 @@
 package com.student.pantry.studentPantry.service;
 
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.student.pantry.studentPantry.builder.ProductBuilder;
-import com.student.pantry.studentPantry.entity.PantryUser;
 import com.student.pantry.studentPantry.entity.Products;
 import com.student.pantry.studentPantry.repository.ProductJpa;
-
-import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ProductService {
@@ -23,8 +22,9 @@ public class ProductService {
     EmailService emailService;
 
     @Autowired
-    public ProductService(ProductJpa productRepository) {
+    public ProductService(ProductJpa productRepository,UserServiceImpl userServiceImpl) {
         this.productRepository = productRepository;
+        this.userServiceImpl=userServiceImpl;
     }
 
     public List<Products> getAllProducts() {

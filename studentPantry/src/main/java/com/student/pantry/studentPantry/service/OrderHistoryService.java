@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import com.student.pantry.studentPantry.dto.OrderHistoryDto;
 import com.student.pantry.studentPantry.entity.OrderHistory;
-import com.student.pantry.studentPantry.entity.User;
 import com.student.pantry.studentPantry.repository.OrderHistoryRepository;
 import com.student.pantry.studentPantry.repository.ShoppingCartRepository;
 import com.student.pantry.studentPantry.response.OrderHistoryResponse;
@@ -22,17 +21,17 @@ public class OrderHistoryService {
     private final OrderHistoryRepository orderHistoryRepository;
     private final ShoppingCartRepository shoppingCartRepository;
     
-    @Autowired
-    private EmailService emailService;
+   private final EmailService emailService;
     
-    @Autowired
-    UserServiceImpl userServiceImpl;
+    private final UserServiceImpl userServiceImpl;
 
 
     @Autowired
-    public OrderHistoryService(OrderHistoryRepository orderHistoryRepository, ShoppingCartRepository shoppingCartRepository) {
+    public OrderHistoryService(OrderHistoryRepository orderHistoryRepository, ShoppingCartRepository shoppingCartRepository,UserServiceImpl userServiceImpl,EmailService emailService) {
         this.orderHistoryRepository = orderHistoryRepository;
         this.shoppingCartRepository=shoppingCartRepository;
+        this.emailService=emailService;
+        this.userServiceImpl=userServiceImpl;
     }
 
     public OrderHistoryResponse createOrder(OrderHistoryDto orderHistoryDto) {

@@ -45,7 +45,10 @@ public class UserServiceImpl implements UserService{
             .userPasswd(userDto.getUserPasswd())
             .userRole(com.student.pantry.studentPantry.entity.UserRole.STUDENT)
             .build();
-            PantryUser pantryUser=pantryUserJpa.findByEmail(userDto.getEmail());
+            PantryUser pantryUser=null;
+            if(userDto.getEmail()!=null){
+                pantryUser=pantryUserJpa.findByEmail(userDto.getEmail());
+            }
            if( pantryUser==null){
             pantryUserJpa.save(spPantryUser);
            }
