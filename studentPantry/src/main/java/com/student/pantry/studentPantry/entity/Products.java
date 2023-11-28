@@ -46,4 +46,12 @@ public class Products {
 	public void setProductId(long productId){
 		this.productId=productId;
 	}
+		
+		public String getproductImageURL() {
+			this.productId=productId;
+			return productImageURL;
+		}
+		public void setProductImageURL(String productImageURL) {
+			this.productImageURL = productImageURL;
+		}
 }
