@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,18 +27,24 @@ public class ProductController {
         this.productService = productService;
     }
 
+
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @GetMapping
     public List<Products> getAllProducts() {
         return productService.getAllProducts();
     }
 
+
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PostMapping
     @RequestMapping("/add")
-    public ResponseEntity<String> addProduct(@RequestParam String productName, @RequestParam int productQuantity, @RequestParam String productExpiryDate) {
-        productService.addProduct(productName, productQuantity, productExpiryDate);
+    public ResponseEntity<String> addProduct(@RequestParam String productName, @RequestParam int productQuantity, @RequestParam String productExpiryDate, @RequestParam String productImageURL) {
+        productService.addProduct(productName, productQuantity, productExpiryDate, productImageURL);
         return ResponseEntity.status(HttpStatus.OK).body("Product added successfully");
     }
 
+
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PutMapping
     @RequestMapping("/update")
     public ResponseEntity<String> updateProduct(  @RequestParam Long productId, 
@@ -49,6 +56,8 @@ public class ProductController {
         return ResponseEntity.status(HttpStatus.OK).body("Product updated successfully...!!!");
     }
 
+
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @DeleteMapping
     @RequestMapping("/remove")
     public ResponseEntity<String> removeProduct(@RequestParam Long productId)

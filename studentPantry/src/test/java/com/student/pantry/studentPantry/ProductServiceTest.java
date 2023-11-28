@@ -57,7 +57,7 @@ class ProductServiceTest {
 
         when(userServiceImpl.getAllUserEmails()).thenReturn(null);
         // Act
-        productService.addProduct(productName, productQuantity, productExpiryDate);
+        productService.addProduct(productName, productQuantity, productExpiryDate,"url");
 
         // Assert
         verify(productJpa, times(1)).save(any(Products.class));

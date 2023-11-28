@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,6 +26,8 @@ class UserController{
     public UserController() {
     }
 
+
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody StudentUserDto userDto){
         //StudentUserService service=new StudentUserServiceImpl();
@@ -36,6 +39,8 @@ class UserController{
         return ResponseEntity.ok(resp);
     }
 
+
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody UserDto userDto){
        // UserServiceImpl userServiceImpl =new UserServiceImpl();
@@ -46,12 +51,16 @@ class UserController{
         return ResponseEntity.ok().body(resp);
     }
 
+
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @GetMapping("/users")
     public List<String> getAllUsers()
     {
         return new ArrayList<String>();
     }
 
+
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @GetMapping("/user/{userId}")
     public ResponseEntity<?> getUserDetails(@PathVariable Long userId)
     {
@@ -68,6 +77,8 @@ class UserController{
         return ResponseEntity.ok().body( new UserResponse(message,resp));
     }
 
+
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PostMapping("/logout")
     public ResponseEntity<?> logout(@RequestBody UserDto userDto){
         // UserServiceImpl userServiceImpl =new UserServiceImpl();

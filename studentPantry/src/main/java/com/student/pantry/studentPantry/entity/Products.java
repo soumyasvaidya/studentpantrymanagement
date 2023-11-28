@@ -15,6 +15,7 @@ public class Products {
     public String productName;
     public int productQuantity;
     public String productExpiryDate;
+	public String productImageURL;
     
     public Products() {
     }
