@@ -32,18 +32,16 @@ public class CartService {
         shoppingCartRepository.save(cartItem);
     }
 
-    public void removeProductFromCart(Long userID, Long productID, int quantity) {
+    public void removeProductFromCart(Long userID, Long productID) {
         ShoppingCart cartItem = shoppingCartRepository.findByUserIDAndProductID(userID, productID);
 
         if (cartItem != null) {
             // Update quantity or remove the item if quantity becomes zero
-            int newQuantity = cartItem.getProductQuantity() - quantity;
+            int newQuantity = cartItem.getProductQuantity();
 
             if (newQuantity > 0) {
-                cartItem.setProductQuantity(newQuantity);
-            } else {
-                shoppingCartRepository.delete(cartItem);
-            }
+               shoppingCartRepository.delete(cartItem);  
+            } 
         }
     }
 

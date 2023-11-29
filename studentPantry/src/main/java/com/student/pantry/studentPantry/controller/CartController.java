@@ -25,8 +25,8 @@ public class CartController {
 
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PostMapping("/{userID}/remove/{productID}")
-    public ResponseEntity<String> removeProductFromCart(@PathVariable Long userID, @PathVariable Long productID, @RequestParam int quantity) {
-        cartService.removeProductFromCart(userID, productID, quantity);
+    public ResponseEntity<String> removeProductFromCart(@PathVariable Long userID, @PathVariable Long productID) {
+        cartService.removeProductFromCart(userID, productID);
         return ResponseEntity.status(HttpStatus.OK).body("Product removed from the cart successfully...!!!");
     }
 
