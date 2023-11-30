@@ -116,8 +116,8 @@ public class UserServiceImpl implements UserService{
         PantryUser pantryUser=pantryUserJpa.findByEmail(userDto.getEmail());
         if(pantryUser!=null && pantryUser.getEmail()!=null){
             message="You have been logged out ";
-             if(pantryUser.getUserrole().equals(UserRole.ADMIN)){
-                adminCount=0;
+             if(pantryUser.getUserrole().equals(com.student.pantry.studentPantry.entity.UserRole.ADMIN)){
+                adminLoginManager.logout();
                 
         }
 

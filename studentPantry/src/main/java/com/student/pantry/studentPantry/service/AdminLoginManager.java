@@ -33,5 +33,10 @@ public class AdminLoginManager {
             return true;
         }
     }
+    
+    public void logout(){
+            adminCount=0;
+        
+    }
 }
 
