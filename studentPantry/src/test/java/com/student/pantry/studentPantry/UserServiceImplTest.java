@@ -14,8 +14,10 @@ import com.student.pantry.studentPantry.dto.StudentUserDto;
 import com.student.pantry.studentPantry.dto.UserDto;
 import com.student.pantry.studentPantry.dto.UserRole;
 import com.student.pantry.studentPantry.entity.PantryUser;
+import com.student.pantry.studentPantry.repository.AdminUserJpa;
 import com.student.pantry.studentPantry.repository.PantryUserRepository;
 import com.student.pantry.studentPantry.response.UserResponse;
+import com.student.pantry.studentPantry.service.AdminLoginManager;
 import com.student.pantry.studentPantry.service.UserServiceImpl;
 
 @ExtendWith(MockitoExtension.class)
@@ -23,6 +25,12 @@ class UserServiceImplTest {
 
     @Mock
     private PantryUserRepository pantryUserRepository;
+
+    @Mock
+    private AdminUserJpa adminUserJpa;
+
+    @Mock
+    private AdminLoginManager adminLoginManager;
 
     @InjectMocks
     private UserServiceImpl userService;
@@ -59,7 +67,7 @@ class UserServiceImplTest {
         assertEquals("duplicate registration", response.getMessage());
     }
 
-    @Test
+   @Test
     void testLogin_Success() {
         // Arrange
         UserDto userDto = new UserDto();
@@ -70,9 +78,11 @@ class UserServiceImplTest {
         PantryUser pantryUser = new PantryUser();
         pantryUser.setEmail("test@example.com");
         pantryUser.setUserrole(com.student.pantry.studentPantry.entity.UserRole.STUDENT);
+        pantryUser.setUserId(1234L);
+        pantryUser.setUsername("username");
 
+        when(adminLoginManager.login(userDto)).thenReturn(true);
         when(pantryUserRepository.findByEmailAndUserPasswd(anyString(), anyString())).thenReturn(pantryUser);
-
         // Act
         UserResponse response = userService.login(userDto);
 
@@ -80,6 +90,22 @@ class UserServiceImplTest {
         assertEquals("LOGIN SUCESS", response.getMessage());
     }
 
-    // Add more test cases for other methods as needed...
+    @Test
+    void testLogin_AdminLoginNotAllowed() {
+        // Arrange
+        UserDto userDto = new UserDto();
+        userDto.setUserrole(UserRole.ADMIN);
+        userDto.setEmail("admin@example.com");
+        userDto.setUserPasswd("adminPassword");
 
+        when(adminLoginManager.login(userDto)).thenReturn(false);
+
+        // Act
+        UserResponse response = userService.login(userDto);
+
+        // Assert
+        assertEquals("Only one admin login allowed at a time ", response.getMessage());
+    }
+
+    
 }

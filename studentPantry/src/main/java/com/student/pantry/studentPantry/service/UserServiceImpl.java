@@ -24,10 +24,13 @@ public class UserServiceImpl implements UserService{
     AdminUserJpa adminUserJpa;
     UserJpa UserJpa;
     private final PantryUserRepository pantryUserJpa;
+    
+    private final AdminLoginManager adminLoginManager;
 
     @Autowired
-    public UserServiceImpl(PantryUserRepository pRepository){
+    public UserServiceImpl(PantryUserRepository pRepository,AdminLoginManager adminLoginManager){
         pantryUserJpa=pRepository;
+        this.adminLoginManager=adminLoginManager;
 
     }
 
@@ -72,7 +75,10 @@ public class UserServiceImpl implements UserService{
         try{
         System.out.println("admincount: "+adminCount);
         System.out.println("role::"+ userDto.getUserrole());
-        if(userDto.getUserrole().equals(UserRole.ADMIN) && adminCount>=1){
+        /*if(userDto.getUserrole().equals(UserRole.ADMIN) && adminCount>=1){
+            message="Only one admin login allowed at a time ";
+        }*/
+        if(adminLoginManager.login(userDto)==false){
             message="Only one admin login allowed at a time ";
         }
         else{
@@ -83,7 +89,7 @@ public class UserServiceImpl implements UserService{
             userDto.setId(pantryUser.getUserId());
             userDto.setUsername(pantryUser.getUsername());
             if(pantryUser.getUserrole().equals(com.student.pantry.studentPantry.entity.UserRole.ADMIN)){
-                adminCount=1;
+                //adminCount=1;
                 System.out.println("admincount: "+adminCount);
 
             }
@@ -112,6 +118,7 @@ public class UserServiceImpl implements UserService{
             message="You have been logged out ";
              if(pantryUser.getUserrole().equals(UserRole.ADMIN)){
                 adminCount=0;
+                
         }
 
         }
