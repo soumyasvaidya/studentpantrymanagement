@@ -25,10 +25,11 @@ public class ProductService {
     
     @Autowired
     EmailService emailService;
-   
+
     @Autowired
-    public ProductService(ProductJpa productRepository) {
+    public ProductService(ProductJpa productRepository,UserServiceImpl userServiceImpl) {
         this.productRepository = productRepository;
+        this.userServiceImpl=userServiceImpl;
     }
 
     public List<Products> getAllProducts() {

@@ -43,12 +43,15 @@ public class Products {
 	public void setProductExpiryDate(String productExpiryDate) {
 		this.productExpiryDate = productExpiryDate;
 	}
-	
-	public String getproductImageURL() {
-		return productImageURL;
+	public void setProductId(long productId){
+		this.productId=productId;
 	}
-
-	public void setProductImageURL(String productImageURL) {
-		this.productImageURL = productImageURL;
-	}
+		
+		public String getproductImageURL() {
+			this.productId=productId;
+			return productImageURL;
+		}
+		public void setProductImageURL(String productImageURL) {
+			this.productImageURL = productImageURL;
+		}
 }
