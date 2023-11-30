@@ -79,7 +79,7 @@ class CartServiceTest {
        // when(shoppingCartRepository.save(any(ShoppingCart.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
         // Act
-        cartService.removeProductFromCart(userId, productId, quantityToRemove);
+        cartService.removeProductFromCart(userId, productId);
 
         // Assert
         verify(shoppingCartRepository, times(1)).findByUserIDAndProductID(userId, productId);
@@ -102,7 +102,7 @@ class CartServiceTest {
         //when(shoppingCartRepository.save(any(ShoppingCart.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
         // Act
-        cartService.removeProductFromCart(userId, productId, quantityToRemove);
+        cartService.removeProductFromCart(userId, productId);
 
         // Assert
         verify(shoppingCartRepository, times(1)).findByUserIDAndProductID(userId, productId);
@@ -119,7 +119,7 @@ class CartServiceTest {
         when(shoppingCartRepository.findByUserIDAndProductID(anyLong(), anyLong())).thenReturn(null);
 
         // Act
-        cartService.removeProductFromCart(userId, productId, quantityToRemove);
+        cartService.removeProductFromCart(userId, productId);
 
         // Assert
         verify(shoppingCartRepository, times(1)).findByUserIDAndProductID(userId, productId);
