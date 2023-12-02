@@ -108,4 +108,8 @@ public class ProductService {
             return null;
         }
     }
+
+    public Products getProductById(Long productId) {
+        return productRepository.findById(productId).orElse(null);
+    }
 }
