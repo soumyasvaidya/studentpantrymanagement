@@ -98,6 +98,14 @@ class UserServiceImplTest {
         userDto.setEmail("admin@example.com");
         userDto.setUserPasswd("adminPassword");
 
+        PantryUser pantryUser = new PantryUser();
+        pantryUser.setEmail("test@example.com");
+        pantryUser.setUserrole(com.student.pantry.studentPantry.entity.UserRole.ADMIN);
+        pantryUser.setUserId(1234L);
+        pantryUser.setUsername("username");
+
+        when(pantryUserRepository.findByEmailAndUserPasswd(anyString(), anyString())).thenReturn(pantryUser);
+        
         when(adminLoginManager.login(userDto)).thenReturn(false);
 
         // Act
