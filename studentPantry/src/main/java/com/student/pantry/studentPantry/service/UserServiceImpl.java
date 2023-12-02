@@ -75,31 +75,21 @@ public class UserServiceImpl implements UserService{
         try{
         System.out.println("admincount: "+adminCount);
         System.out.println("role::"+ userDto.getUserrole());
-        /*if(userDto.getUserrole().equals(UserRole.ADMIN) && adminCount>=1){
-            message="Only one admin login allowed at a time ";
-        }*/
-        if(adminLoginManager.login(userDto)==false){
-            message="Only one admin login allowed at a time ";
-        }
-        else{
         pantryUser=pantryUserJpa.findByEmailAndUserPasswd(userDto.getEmail(), userDto.getUserPasswd());
-        System.out.println("pantry user::"+ pantryUser.getEmail()+" :role:"+pantryUser.getUserrole()+"name:: "+pantryUser.getUsername());
         if(pantryUser!=null && pantryUser.getEmail()!=null){
             message="LOGIN SUCESS";
             userDto.setId(pantryUser.getUserId());
             userDto.setUsername(pantryUser.getUsername());
-            if(pantryUser.getUserrole().equals(com.student.pantry.studentPantry.entity.UserRole.ADMIN)){
-                //adminCount=1;
-                System.out.println("admincount: "+adminCount);
-
-            }
+            if(adminLoginManager.login(userDto)==false){
+            message="Only one admin login allowed at a time ";
+        }
             System.out.println("admincount: "+adminCount);
 
         }
         else{
             message="INVALID USERNAME OR PASSWORD";
         }
-    }
+    
     }
     catch(Exception e){
         System.err.println("ERROR LOGGING IN"+ e.getLocalizedMessage());
