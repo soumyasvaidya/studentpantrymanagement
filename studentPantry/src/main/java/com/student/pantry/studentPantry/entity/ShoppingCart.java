@@ -8,11 +8,8 @@ public class ShoppingCart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long cartProductID;
-
     private Long userID;
-
     private Long productID;
-
     private int productQuantity;
 
     // Constructors, Getters, and Setters
