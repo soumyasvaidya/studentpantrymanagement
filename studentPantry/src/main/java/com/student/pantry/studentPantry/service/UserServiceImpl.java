@@ -76,7 +76,15 @@ public class UserServiceImpl implements UserService{
         System.out.println("admincount: "+adminCount);
         System.out.println("role::"+ userDto.getUserrole());
         pantryUser=pantryUserJpa.findByEmailAndUserPasswd(userDto.getEmail(), userDto.getUserPasswd());
-        if(pantryUser!=null && pantryUser.getEmail()!=null){
+        com.student.pantry.studentPantry.entity.UserRole role=null;
+        if(userDto.getUserrole().equals(UserRole.ADMIN)){
+            role=com.student.pantry.studentPantry.entity.UserRole.ADMIN;
+        }
+        else if (userDto.getUserrole().equals(UserRole.STUDENT)) {
+            role=com.student.pantry.studentPantry.entity.UserRole.STUDENT;
+        }
+        if(pantryUser!=null && pantryUser.getEmail()!=null && pantryUser.getUserrole().equals(role) && role!=null){
+
             message="LOGIN SUCESS";
             userDto.setId(pantryUser.getUserId());
             userDto.setUsername(pantryUser.getUsername());
