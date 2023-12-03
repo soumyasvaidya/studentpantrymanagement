@@ -47,11 +47,11 @@ public class Products {
 		this.productId=productId;
 	}
 		
-		public String getproductImageURL() {
-			this.productId=productId;
-			return productImageURL;
-		}
-		public void setProductImageURL(String productImageURL) {
-			this.productImageURL = productImageURL;
-		}
+	public String getProductImageURL() {
+		this.productId=productId;
+		return productImageURL;
+	}
+	public void setProductImageURL(String productImageURL) {
+		this.productImageURL = productImageURL;
+	}
 }

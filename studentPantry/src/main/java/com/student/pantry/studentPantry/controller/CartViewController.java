@@ -1,6 +1,7 @@
 package com.student.pantry.studentPantry.controller;
 
 import com.student.pantry.studentPantry.entity.ShoppingCart;
+import com.student.pantry.studentPantry.service.CartDetails;
 import com.student.pantry.studentPantry.service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -21,10 +22,9 @@ public class CartViewController {
         this.cartService = cartService;
     }
 
-
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @GetMapping("/{userID}")
-    public List<ShoppingCart> viewCart(@PathVariable Long userID) {
+    public List<CartDetails> viewCart(@PathVariable Long userID) {
         return cartService.viewCart(userID);
     }
 }

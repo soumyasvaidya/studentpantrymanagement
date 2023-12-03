@@ -30,7 +30,6 @@ public class CartController {
         return ResponseEntity.status(HttpStatus.OK).body("Product removed from the cart successfully...!!!");
     }
 
-
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PostMapping("/{userID}/update/{productID}")
     public ResponseEntity<String> updateProductQuantity(@PathVariable Long userID, @PathVariable Long productID, @RequestParam int newQuantity) {
