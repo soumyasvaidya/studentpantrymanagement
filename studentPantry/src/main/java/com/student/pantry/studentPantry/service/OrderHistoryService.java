@@ -41,6 +41,7 @@ public class OrderHistoryService {
         this.productJpa=productJpa;
     }
 
+    @Transactional
     public OrderHistoryResponse createOrder(OrderHistoryDto orderHistoryDto) {
         OrderHistoryDto orderPlaced=null;
         OrderHistoryResponse response=null;
@@ -66,6 +67,7 @@ public class OrderHistoryService {
         orderPlaced=convertEntityToDto(savedOrder);
         shoppingCartRepository.deleteByUserID(savedOrder.getUserId());
                  response= new OrderHistoryResponse("Order placed successfully", orderPlaced);
+
                  userEmail = userServiceImpl.getUserDetailsByUserId(savedOrder.getUserId().longValue());
                  if(userEmail!=null && savedOrder.getOrderId()!=null) {
                 	 emailService.sendOrderConfirmation(userEmail, savedOrder.getOrderId());
