@@ -1,13 +1,16 @@
 package com.student.pantry.studentPantry.service;
 
-import com.student.pantry.studentPantry.entity.Products;
-import com.student.pantry.studentPantry.entity.ShoppingCart;
-import com.student.pantry.studentPantry.repository.ShoppingCartRepository;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.student.pantry.studentPantry.entity.Products;
+import com.student.pantry.studentPantry.entity.ShoppingCart;
+import com.student.pantry.studentPantry.repository.ProductJpa;
+import com.student.pantry.studentPantry.repository.ShoppingCartRepository;
 
 @Service
 public class CartService {
@@ -15,10 +18,12 @@ public class CartService {
 
     @Autowired
     private ProductService productService;
+    private final ProductJpa productJpa;
 
     @Autowired
-    public CartService(ShoppingCartRepository shoppingCartRepository) {
+    public CartService(ShoppingCartRepository shoppingCartRepository,ProductJpa productJpa) {
         this.shoppingCartRepository = shoppingCartRepository;
+        this.productJpa=productJpa;
     }
 
     public void addProductToCart(Long userID, Long productID, int quantity) {
@@ -33,8 +38,18 @@ public class CartService {
             // Update quantity if the item already exists in the cart
             cartItem.setProductQuantity(cartItem.getProductQuantity() + quantity);
         }
-
         shoppingCartRepository.save(cartItem);
+
+         Optional<Products> product=productJpa.findById(productID);
+            System.out.println("prduct+" + product.toString());
+            if(product.isPresent()){
+                int oldQuantity=product.get().getProductQuantity();
+                Products newProduct=product.get();
+                newProduct.setProductQuantity(oldQuantity-quantity);
+                System.out.println("prduct+" + newProduct.toString());
+                 productJpa.save(newProduct);
+            }
+            
     }
 
     public void removeProductFromCart(Long userID, Long productID) {
@@ -45,13 +60,22 @@ public class CartService {
             int newQuantity = cartItem.getProductQuantity();
             if (newQuantity > 0) {
                shoppingCartRepository.delete(cartItem);  
+               Optional<Products> product=productJpa.findById(productID);
+                System.out.println("prduct+" + product.toString());
+                if(product.isPresent()){
+                    int oldQuantity=product.get().getProductQuantity();
+                    Products newProduct=product.get();
+                    newProduct.setProductQuantity(oldQuantity+newQuantity);
+                    System.out.println("prduct+" + newProduct.toString());
+                    productJpa.save(newProduct);
+                }
             } 
         }
     }
 
     public void updateProductQuantity(Long userID, Long productID, int newQuantity) {
         ShoppingCart cartItem = shoppingCartRepository.findByUserIDAndProductID(userID, productID);
-
+        
         if (cartItem != null) {
             cartItem.setProductQuantity(newQuantity);
             shoppingCartRepository.save(cartItem);

@@ -56,12 +56,12 @@ public class OrderHistoryService {
 
         // Convert DTO to Entity and save to the database
         OrderHistory orderHistoryEntity = convertDtoToEntity(orderHistoryDto);
-        boolean updateQuantity= updateProductQuantity(orderHistoryEntity.getItems());
-        if(!updateQuantity){
+       // boolean updateQuantity= updateProductQuantity(orderHistoryEntity.getItems());
+        /*if(!updateQuantity){
              response=new OrderHistoryResponse("Some product in the order are invalid!!", orderPlaced);
              return response;
 
-        }
+        }*/
         OrderHistory savedOrder = orderHistoryRepository.save(orderHistoryEntity);
         orderPlaced=convertEntityToDto(savedOrder);
         shoppingCartRepository.deleteByUserID(savedOrder.getUserId());
